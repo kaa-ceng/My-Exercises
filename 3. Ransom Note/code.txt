@@ -1,0 +1,40 @@
+class Solution {
+public:
+    bool canConstruct(string ransomNote, string magazine) {
+        
+        if(magazine.size() == 0){
+            return true;
+        }
+
+        else{
+
+            //creating an array that holds the chars we have in magazine
+            //26 is for 26 lowercase letters. this is encoded from ASCII.
+            //since lowercase letters start from int 97
+            //i decrease 97 from the ascii table representation of the char later
+            int myChars[26] = {0};
+
+            //fill the array with char counts from magazine
+            for(int myint1 = 0; myint1<magazine.size() ; myint1++){
+
+                myChars[magazine[myint1]-97]++;
+            }
+
+            //check if there is enough chars to construct ransomNote
+            for(int myint2 = 0; myint2<ransomNote.size() ; myint2++){
+
+                if(myChars[ransomNote[myint2]-97] == 0 ){
+
+                    return false;
+                }
+
+                else{
+                    myChars[ransomNote[myint2]-97]--;
+                }
+            }
+
+            return true;
+
+        }
+    }
+};

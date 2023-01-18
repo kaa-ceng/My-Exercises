@@ -1,0 +1,87 @@
+class Solution {
+public:
+    string convert(string s, int numRows) {
+        
+        // if there is one row
+        if(numRows == 1){           
+            return s;
+        }
+
+
+        int myFirstPattern = numRows + numRows-2;
+
+        // how many complete patterns we have
+        int myHowManyFirstPattern = s.size() / myFirstPattern;
+
+        // how many coloumns we need for these full patterns
+        int myColoumnRequiredForFullPatterns = myHowManyFirstPattern * (1 + numRows-2);
+
+        // how many chars left
+        int myCharsLeftCount = s.size() % myFirstPattern;
+
+        // how many coloumns we need total
+        int myTotalColoumnCount = myColoumnRequiredForFullPatterns;
+        
+        // if there is any char left after a full pattern, add one more coloumn
+        if (myCharsLeftCount != 0){
+
+            int myColoumnRequiredForCharsLeft = 1 ;
+
+            // if the count of chars left is bigger than row count, add coloumns equal to number of extra rows
+            if (myCharsLeftCount > numRows){
+
+                myColoumnRequiredForCharsLeft += myCharsLeftCount - numRows; 
+            }
+
+            myTotalColoumnCount += myColoumnRequiredForCharsLeft;
+        }
+
+        // create a 2D matrix
+        string myMatrix[numRows][myTotalColoumnCount];
+
+
+        // fill matrix "zigzag"
+        int myint1 = 0;
+        int myint2 = 0;
+
+        int myCharIndex = 0;
+
+        // while we have chars to visit
+        while(myCharIndex < s.size() ){
+            
+            // put char into our matrix
+            myMatrix[myint1][myint2] = s[myCharIndex];
+            
+            // calculation which shows us where the next char will be located.
+            if( (myCharIndex+1) % myFirstPattern - numRows < 0 && (myCharIndex+1) % myFirstPattern != 0 ){
+                myint1++;
+            }
+
+            // calculation which shows us where the next char will be located.
+            if( (myCharIndex+1) % myFirstPattern - numRows >= 0 || (myCharIndex+1) % myFirstPattern == 0 ){
+                myint1--;
+                myint2++;
+            }
+
+            myCharIndex++;
+        }
+
+
+        // create string to read matrix
+        string myReadMatrix;
+        for(myint1 = 0; myint1 < numRows; myint1++){
+
+            for(int myint2 = 0; myint2 < myTotalColoumnCount; myint2++){
+                
+                if(myMatrix[myint1][myint2] != ""){
+                    myReadMatrix.push_back(myMatrix[myint1][myint2][0]);
+                }   
+            }
+        }
+
+        return myReadMatrix;
+
+
+
+    }
+};

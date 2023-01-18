@@ -1,0 +1,20 @@
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        
+        vector<int> myList;
+
+        for(int myint1 = 0; myint1 < nums.size(); myint1++){
+            for(int myint2 = myint1+1; myint2 < nums.size(); myint2 ++){
+                if (nums[myint1] + nums[myint2] == target){
+                    
+                    myList.push_back(myint1);
+                    myList.push_back(myint2);
+                    break;
+                }
+            }
+        }
+        return myList;
+    }
+    
+};

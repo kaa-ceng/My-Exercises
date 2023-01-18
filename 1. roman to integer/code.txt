@@ -1,0 +1,120 @@
+class Solution {
+public:
+    int romanToInt(string s) {
+        
+        //add numbers to this result
+        int myResult = 0; 
+
+        //hold last char to update number
+        char myLastChar; 
+
+        //loop to traverse all chars of string s
+        for( int myint1 = 0; myint1<s.length() ; myint1++){
+
+            //increment result and update myLastChar
+            if( s[myint1] == 'I' ){
+
+                myResult++;
+                myLastChar = s[myint1];
+            }
+
+            //if char is V
+            else if( s[myint1] == 'V'){
+
+                //if last char is I, add 3 to the result instead of 5
+                if(myLastChar == 'I'){
+
+                    myResult += 3;
+                    myLastChar = s[myint1];
+                }
+
+                //V is not after I
+                else{
+                    myResult += 5;
+                    myLastChar = s[myint1];
+                }
+            
+            }
+            //char is X
+            else if(s[myint1] == 'X'){
+                
+                if (myLastChar == 'I'){
+                    myResult += 8;
+                    myLastChar = s[myint1];
+                }
+
+                //X is not after I
+                else{
+                    myResult += 10;
+                    myLastChar = s[myint1];
+                }
+            
+            }
+
+            //char is L
+            else if(s[myint1] == 'L'){
+                
+                if (myLastChar == 'X'){
+                    myResult += 30;
+                    myLastChar = s[myint1];
+                }
+
+                //L is not after X
+                else{
+                    myResult += 50;
+                    myLastChar = s[myint1];
+                }
+            
+            }
+
+
+            //char is C
+            else if(s[myint1] == 'C'){
+                
+                if (myLastChar == 'X'){
+                    myResult += 80;
+                    myLastChar = s[myint1];
+                }
+
+                //C is not after X
+                else{
+                    myResult += 100;
+                    myLastChar = s[myint1];
+                }
+            
+            }
+
+            //char is D
+            else if(s[myint1] == 'D'){
+                
+                if (myLastChar == 'C'){
+                    myResult += 300;
+                    myLastChar = s[myint1];
+                }
+
+                //X is not after I
+                else{
+                    myResult += 500;
+                    myLastChar = s[myint1];
+                }
+            }
+
+            //char is M
+            else if(s[myint1] == 'M'){
+                
+                if (myLastChar == 'C'){
+                    myResult += 800;
+                    myLastChar = s[myint1];
+                }
+
+                //X is not after I
+                else{
+                    myResult += 1000;
+                    myLastChar = s[myint1];
+                }
+            }
+        }
+
+        return myResult;
+    }
+};

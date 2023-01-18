@@ -1,0 +1,94 @@
+class Solution {
+public:
+    vector<int> kWeakestRows(vector<vector<int>>& mat, int k) {
+
+        //holds row,soldierCount
+        vector<pair <int,int> > myWeakestRows;
+
+        //row iteration
+        for(int myint1 = 0; myint1 < mat.size() ; myint1++){
+
+            int mySoldierCount = 0;
+
+            //calculate soldiers for row
+            for (int myint2=0 ; myint2 < mat[myint1].size() ; myint2++){
+
+                if(mat[myint1][myint2] == 1){
+                    mySoldierCount++;
+                }
+
+                // since soldiers are in fron of civilians, dont check other colomns after a zero
+                else{
+                    break;
+                }
+            }
+
+            //if list is empty, add row to list
+            if( myWeakestRows.size() == 0){
+
+                myWeakestRows.push_back( make_pair(myint1,mySoldierCount) );
+            }
+
+            //if soldier count is less than the biggest soldier count in the list or if list doesnt have k elements
+            else if( mySoldierCount < myWeakestRows[myWeakestRows.size()-1].second || myWeakestRows.size() < k){
+
+                //if there is no k elements in the list
+                if (myWeakestRows.size() < k){
+
+                    for (int myint3 = 0; myint3 <= myWeakestRows.size(); myint3++){
+
+                        // if this row doesnt have less soldier count than any other element, 
+                        // push this row back in the list
+                        if(myint3 == myWeakestRows.size()){
+                            myWeakestRows.push_back(make_pair(myint1,mySoldierCount)); 
+                            break;
+                        }
+
+                        // if soldier count of this row is less than soldier count of any other row
+                        // that is already in the list, insert this row to that index
+                        else if (mySoldierCount < myWeakestRows[myint3].second ){
+
+                            myWeakestRows.insert( myWeakestRows.begin() + myint3,  make_pair(myint1,mySoldierCount) );
+                            break;
+                        }
+                    }
+                }
+                
+                // if there are k elements in the list, pop the element with largest soldier count
+                else {
+                    myWeakestRows.pop_back();
+
+                    
+                    for (int myint3 = 0; myint3 <= myWeakestRows.size(); myint3++){
+
+                        // if this row doesnt have less soldier count than any other element, 
+                        // push this row back in the list
+                        if(myint3 == myWeakestRows.size()){
+                            myWeakestRows.push_back(make_pair(myint1,mySoldierCount)); 
+                            break;
+                        }
+
+                        // if soldier count of this row is less than soldier count of any other row
+                        // that is already in the list, insert this row to that index
+                        else if (mySoldierCount < myWeakestRows[myint3].second ){
+
+                            myWeakestRows.insert( myWeakestRows.begin() + myint3,  make_pair(myint1,mySoldierCount) );
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        vector<int> myOrder;
+
+
+        // make a list from row indexes
+        for(int myint4 = 0; myint4 < myWeakestRows.size() ; myint4++){
+
+            myOrder.push_back(myWeakestRows[myint4].first);
+        }
+
+        return myOrder;
+    }
+};

@@ -1,0 +1,53 @@
+class Solution {
+public:
+    string longestCommonPrefix(vector<string>& strs) {
+        
+        string myLongest;
+
+        bool isLongestChanged = false;
+
+        string myTemp; 
+
+        //if there is only one word
+        if(strs.size() == 1){
+
+            myLongest = strs[0];
+        }
+        
+        for (int myint3 = 1; myint3 < strs.size() ; myint3++){
+            
+            //index of char
+            int myint4 = 0;
+
+
+            //index of char is smaller than size of first word and compared word
+            while (myint4 < strs[myint3].size() && myint4 < strs[0].size()){
+
+                //if the letter is the same, go to next letter 
+                if( strs[0][myint4]==strs[myint3][myint4]){
+                    
+                    myTemp.push_back(strs[0][myint4]);
+                    myint4++;
+
+                }
+
+                //if letter is not the same, exit from this word
+                else{
+                    break;
+                }
+            }
+
+            //if myTemp is not empty word and shorter than myLongest, myLongest is now myTemp
+            if( (myTemp.size() < myLongest.size() ) || isLongestChanged == false){
+
+                myLongest = myTemp;
+                isLongestChanged = true;
+            }
+
+            myTemp = "";
+
+        }
+
+        return myLongest;
+    }
+};
